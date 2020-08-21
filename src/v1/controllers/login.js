@@ -6,18 +6,18 @@ import * as responseCodes from '../../helpers/responseCodes.js'
 import User from '../models/users.js'
 
 
-const logger = debug('app:auth:controller')
+const debug_logger = debug('app:auth:controller')
 
 
 export const login = async (req, res) => {
-    logger('LOGIN req.body: ', req.body)
+    debug_logger('LOGIN req.body: ', req.body)
     const { email, password } = req.body
     if (!email || !password) {
         return responseCodes.status400(res)
     }
 
     const results = await User.getByEmail(email)
-    logger('LOGIN Query results: ', results[0])
+    debug_logger('LOGIN Query results: ', results[0])
     if (!results[0]) { return responseCodes.status404(res) }
 
     try {

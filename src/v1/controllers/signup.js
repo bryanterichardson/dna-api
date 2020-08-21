@@ -6,7 +6,7 @@ import * as responseCodes from '../../helpers/responseCodes.js'
 import User from '../models/users.js'
 
 
-const logger = debug('app:auth:controller')
+const debug_logger = debug('app:auth:controller')
 
 
 export default async (req, res) => {

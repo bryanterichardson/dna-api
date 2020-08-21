@@ -5,7 +5,7 @@ import * as responseCodes from "../../helpers/responseCodes.js"
 import User from '../models/users.js'
 
 
-const logger = debug('app:user:controller')
+const debug_logger = debug('app:user:controller')
 
 
 export const createUser = async (req, res) => {

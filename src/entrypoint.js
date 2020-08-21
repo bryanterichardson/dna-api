@@ -5,13 +5,13 @@ import os from 'os'
 import createApp from './app.js';
 
 
-const logger = debug('app:entry')
+const debug_logger = debug('app:entry')
 
 // Check if current process is master.
 if (process.env.NODE_ENV === 'production' && cluster.isMaster) {
-    logger('os.cpus(): ', os.cpus());
-    logger('os.cpus().length: ', os.cpus().length);
-    logger('Creating forks!')
+    debug_logger('os.cpus(): ', os.cpus());
+    debug_logger('os.cpus().length: ', os.cpus().length);
+    debug_logger('Creating forks!')
     // Get total CPU cores.
     let cpuCount = os.cpus().length;
 
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production' && cluster.isMaster) {
     }
 
     cluster.on('exit', (worker, code, signal) => {
-        logger(`worker ${worker.process.pid} died`);
+        debug_logger(`worker ${worker.process.pid} died`);
     });
 } else {
     // This is not the master process, so we spawn the express server.
@@ -33,5 +33,5 @@ if (process.env.NODE_ENV === 'production' && cluster.isMaster) {
     app.set("env", env);
 
     app.listen(port);
-    logger('App running in fork!')
+    debug_logger('App running in fork!')
 }
