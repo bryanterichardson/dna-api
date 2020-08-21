@@ -2,7 +2,7 @@ import cluster from 'cluster'
 import debug from 'debug'
 import os from 'os'
 
-import createApp from './src/app.js';
+import createApp from './app.js';
 
 
 const logger = debug('app:entry')

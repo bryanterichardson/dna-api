@@ -2,9 +2,9 @@
   "name": "dna-api",
   "version": "1.0.0",
   "description": "",
-  "main": "entrypoint.js",
+  "main": "src/entrypoint.js",
   "scripts": {
-    "test": "DEBUG=app:* nodemon ./entrypoint.js"
+    "test": "DEBUG=app:* nodemon src/entrypoint.js"
   },
   "author": "Bryant Eric Richardson",
   "license": "ISC",
