@@ -1,6 +1,10 @@
 import pg from 'pg';
 import settings from '../config.js';
 import knex from 'knex';
+const { attachPaginate } = require('knex-paginate');
+
+
+attachPaginate()
 
 
 export const pool = new pg.Pool({
