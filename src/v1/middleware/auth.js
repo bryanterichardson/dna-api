@@ -31,7 +31,9 @@ export default async (req, res, next) => {
             .join('roles', 'users.role_id', 'roles.id')
         debug_logger('result: ', result)
         const user = result[0] || {}
-        req.user.role = user.role_name
+        req.user.email = user.email
+        req.user.role_id = user.role_id
+        req.user.role_name = user.role_name
         debug_logger('updated token: ', req.user)
         next()
     } catch(e) {
