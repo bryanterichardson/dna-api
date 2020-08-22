@@ -2,7 +2,6 @@ import * as bcrypt from '../../helpers/bcrypt.js'
 import { Model } from '../../helpers/pg.js'
 import Like from './likes.js'
 import Post from './posts.js'
-import UserSettings from './userSettings.js'
 
 
 class UserModel extends Model {
@@ -10,14 +9,14 @@ class UserModel extends Model {
         const user = {}
         user.email = email
         user.encrypted_password = await bcrypt.genPasswordHash(password)
-        user.role = 'client'
+        user.role_id = 1  // Client
         user.can_post = false
         user.email_verified = false
         return super.create(user)
     }
 
     getByEmail(email) {
-        return this.queryBuilder
+        return this.query()
             .select()
             .from(this.tableName)
             .where({email})
@@ -30,10 +29,6 @@ class UserModel extends Model {
 
     getPostsByUserId(user_id) {
         return Post.getByUserId(user_id)
-    }
-
-    getSettingsByUserId(user_id) {
-        return UserSettings.getByUserId(user_id)
     }
 }
 

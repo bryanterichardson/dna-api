@@ -9,7 +9,7 @@ import User from '../models/users.js'
 const debug_logger = debug('app:auth:controller')
 
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
     debug_logger('LOGIN req.body: ', req.body)
     const { email, password } = req.body
     if (!email || !password) {
@@ -30,3 +30,5 @@ export const login = async (req, res) => {
         return responseCodes.status400(res)
     }
 }
+
+export default login

@@ -1,5 +1,7 @@
-import settings from '../config.js'
 import jwt from 'jsonwebtoken'
+
+import settings from '../config.js'
+
 
 export const jwtSign = (data, custom_options) => {
     return new Promise( (resolve, reject) => {
@@ -15,6 +17,7 @@ export const jwtSign = (data, custom_options) => {
         })
     })
 }
+
 
 export const jwtVerify = (token) => {
     return new Promise( (resolve, reject) => {

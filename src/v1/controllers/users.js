@@ -52,7 +52,7 @@ export const getUserById = async (req, res) => {
 }
 
 export const getUserLikes = async (req, res) => {
-    if (req.user.role !== 'admin' && req.params.id !== req.user.id){
+    if (req.user.role !== 'admin' && req.params.id !== String(req.user.userId)){
         return responseCodes.status401(res)
     }
     try {
@@ -67,7 +67,7 @@ export const getUserLikes = async (req, res) => {
 }
 
 export const getUserPosts = async (req, res) => {
-    if (req.user.role !== 'admin' && req.params.id !== req.user.id){
+    if (req.user.role !== 'admin' && req.params.id !== String(req.user.userId)){
         return responseCodes.status401(res)
     }
     try {
@@ -82,7 +82,7 @@ export const getUserPosts = async (req, res) => {
 }
 
 // export const getUserReplies = async (req, res) => {
-//     if (req.user.role !== 'admin' && req.params.id !== req.user.id){
+//     if (req.user.role !== 'admin' && req.params.id !== String(req.user.userId)){
 //         return responseCodes.status401(res)
 //     }
 //     try {
@@ -96,23 +96,9 @@ export const getUserPosts = async (req, res) => {
 //     }
 // }
 
-export const getUserSettings = async (req, res) => {
-    if (req.user.role !== 'admin' && req.params.id !== req.user.id){
-        return responseCodes.status401(res)
-    }
-    try {
-        const result = await User.getSettingsByUserId(req.params.id)
-        let settings = result[0] || {}
-        settings = clean.UserSettings(req, settings)
-        if (settings) { return responseCodes.status200(res, {settings}) }
-        return responseCodes.status404(res)
-    } catch(e) {
-        return responseCodes.status400(res, {errorDesc: e.toString()})
-    }
-}
 
 export const updateUserById = async (req, res) => {
-    if (req.user.role !== 'admin' && req.params.id !== req.user.id){
+    if (req.user.role !== 'admin' && req.params.id !== String(req.user.userId)){
         return responseCodes.status401(res)
     }
     try {

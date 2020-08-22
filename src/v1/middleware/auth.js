@@ -26,9 +26,12 @@ export default async (req, res, next) => {
     }
 
     try {
-        const result = await User.getById(req.user.userId)
+        const result = await User
+            .getById(req.user.userId)
+            .join('roles', 'users.role_id', 'roles.id')
+        debug_logger('result: ', result)
         const user = result[0] || {}
-        req.user.role = user.role
+        req.user.role = user.role_name
         debug_logger('updated token: ', req.user)
         next()
     } catch(e) {

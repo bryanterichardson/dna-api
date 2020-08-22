@@ -1,10 +1,11 @@
-import pg from 'pg';
-import settings from '../config.js';
 import knex from 'knex';
-const { attachPaginate } = require('knex-paginate');
+import knexPaginate from 'knex-paginate';
+import pg from 'pg';
+
+import settings from '../config.js';
 
 
-attachPaginate()
+knexPaginate.attachPaginate()
 
 
 export const pool = new pg.Pool({
@@ -12,14 +13,17 @@ export const pool = new pg.Pool({
     max: 5,
 })
 
+
 export const client = new pg.Client({
     ...settings.postgres,
 })
+
 
 export const queryBuilder = knex({
     client: 'pg',
     connection: settings.postgres,
 })
+
 
 export class Model {
     constructor (tableName) {
@@ -32,58 +36,52 @@ export class Model {
     }
 
     create(data) {
-        return this.queryBuilder
+        return this.queryBuilder(this.tableName)
             .insert(data)
-            .into(this.tableName)
             .returning('*')
     }
 
     deleteById(id) {
-        return this.queryBuilder
+        return this.queryBuilder(this.tableName)
             .delete()
-            .from(this.tableName)
-            .where('id', '=', id)
+            .where(`${this.tableName}.id`, '=', id)
+            .returning('*')
     }
 
-    find(...paramsObjs) {
-        const query = this.queryBuilder
+    find(wheres=[]) {
+        let query = this.queryBuilder(this.tableName)
             .select()
-            .from(this.tableName)
-        paramsObjs.forEach((item) => {
-            query.where(item)
+        wheres.forEach((item) => {
+            query = query.where(item)
         })
         return query
     }
 
     getBy(columnName, value) {
-        return this.queryBuilder
+        return this.queryBuilder(this.tableName)
             .select()
-            .from(this.tableName)
-            .where({columnName: value})
+            .where(`${this.tableName}.${columnName}`, '=', value)
     }
 
     getById(id) {
-        return this.queryBuilder
+        return this.queryBuilder(this.tableName)
             .select()
-            .from(this.tableName)
-            .where({id})
+            .where(`${this.tableName}.id`, '=', id)
             .limit(1)
     }
 
     getByUserId(user_id) {
-        return this.queryBuilder
+        return this.queryBuilder(this.tableName)
             .select()
-            .from(this.tableName)
-            .where({user_id})
+            .where(`${this.tableName}.user_id`, '=', user_id)
             .limit(1)
     }
 
-    orFind(...paramsObjs) {
-        const query = this.queryBuilder
+    orFind(wheres=[]) {
+        let query = this.queryBuilder(this.tableName)
             .select()
-            .from(this.tableName)
-        paramsObjs.forEach((item) => {
-            query.orWhere(item)
+        wheres.forEach((item) => {
+            query = query.orWhere(item)
         })
         return query
     }
@@ -91,7 +89,7 @@ export class Model {
     updateById(id, data){
         return this.queryBuilder(this.tableName)
             .update(data)
-            .where({id})
+            .where(`${this.tableName}.id`, '=', id)
             .returning('*')
     }
 }

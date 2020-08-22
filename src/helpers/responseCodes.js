@@ -6,6 +6,7 @@ export const status200 = (res, data={}) => {
     })
 }
 
+
 export const status400 = (res, data={}) => {
     res.status(400).json({
         status: 'failure',
@@ -16,6 +17,7 @@ export const status400 = (res, data={}) => {
         }
     })
 }
+
 
 export const status401 = (res, data={}) => {
     res.status(401).json({
@@ -28,6 +30,7 @@ export const status401 = (res, data={}) => {
     })
 }
 
+
 export const status404 = (res, data={}) => {
     res.status(404).json({
         status: 'failure',
@@ -38,6 +41,7 @@ export const status404 = (res, data={}) => {
         }
     })
 }
+
 
 export const status500 = (res, data={}) => {
     res.status(500).json({

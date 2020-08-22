@@ -3,8 +3,8 @@ import cookieParser from 'cookie-parser'
 import express from 'express'
 import morgan from 'morgan'
 
-import authenticate from './v1/middleware/auth.js'
 import mainRouter from './v1/routers/apiv1.js'
+import authenticate from './v1/middleware/auth.js'
 import loginRouter from './v1/routers/login.js'
 import signupRouter from './v1/routers/signup.js'
 
@@ -26,15 +26,3 @@ const createApp = () => {
 }
 
 export default createApp
-
-// Before clustering
-// const app = express()
-//
-// // Middleware
-// app.use(bodyParser.urlencoded({extended: false}))
-// app.use(bodyParser.json())
-// app.use(cookieParser())
-//
-// // Routers
-// app.use('/api/v1', mainRouter)
-// export default app
