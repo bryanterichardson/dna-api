@@ -10,12 +10,10 @@ const router = express.Router()
 // Middleware
 router.use(authenticate)
 
-
 // Health check
 router.get('/health', (req, res) => {
     return responseCodes.status200(res, {ok: true})
 })
-
 
 // Routes
 router.use('/users', userRouter)

@@ -17,7 +17,13 @@ router.route('/:id')
 router.route('/:id/likes')
     .get(userController.getUserLikes)
 
-router.route('/:id/posts')
-    .get(userController.getUserPosts)
+// router.route('/:id/posts')
+//     .get(userController.getUserPosts)
+
+// router.route('/:id/threads')
+//     .get(userController.getUserThreads)
+//
+// router.route('/:id/replies')
+//     .get(userController.getUserReplies)
 
 export default router
