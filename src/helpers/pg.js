@@ -1,12 +1,11 @@
 import knex from 'knex';
+import knexPaginate from 'knex-paginate';
 import pg from 'pg';
 
 import settings from '../config.js';
-import {attachPaginate, attachRoleHandler} from './knexExtension.js'
 
 
-attachPaginate()
-attachRoleHandler()
+knexPaginate.attachPaginate()
 
 
 export const pool = new pg.Pool({
