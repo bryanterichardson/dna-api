@@ -1,12 +1,11 @@
 import knex from 'knex';
-import knexPaginate from 'knex-paginate';
 import pg from 'pg';
 
 import settings from '../config.js';
-import attachRoleHandler from './knexRoles.js'
+import {attachPaginate, attachRoleHandler} from './knexExtension.js'
 
 
-knexPaginate.attachPaginate()
+attachPaginate()
 attachRoleHandler()
 
 
