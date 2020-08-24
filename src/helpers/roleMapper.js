@@ -2,12 +2,17 @@ const roleMapper = (viewSchema={}) => {
     if(typeof viewSchema === 'object' && Array.isArray(viewSchema)){
         throw new Error('enforceRoles error: viewSchema must be an object')
     }
-    return (role, array_of_items) => {
-        if(typeof role !== 'string'){
-            throw new Error('enforceRoles error: role must be a string')
+    return (role_name, array_of_items) => {
+        if(typeof role_name !== 'string'){
+            throw new Error('enforceRoles error: role_name must be a string')
         }
-        array_of_items.forEach( (item) => {
-            for(let [columnName, roleDefinition] of Object.entries(viewSchema)){
+        array_of_items.forEach((item) => {
+            for(let columnName of Object.keys(item)){
+                let roleDefinition = viewSchema[columnName]
+                if (!roleDefinition) {
+                    delete item[columnName]
+                    continue
+                }
                 if(roleDefinition === '*'){
                     continue
                 }
@@ -27,9 +32,9 @@ const roleMapper = (viewSchema={}) => {
                     }
                     allowed.push(definedRole)
                 })
-                if (allowed.length && !allowed.includes(role)) {
+                if (allowed.length && !allowed.includes(role_name)) {
                     delete item[columnName]
-                } else if(notAllowed.length && notAllowed.includes(role)){
+                } else if(notAllowed.length && notAllowed.includes(role_name)){
                     delete item[columnName]
                 }
             }
