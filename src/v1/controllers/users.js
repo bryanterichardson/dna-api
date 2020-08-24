@@ -4,11 +4,13 @@ import * as responseCodes from "../../helpers/responseCodes.js"
 import viewHandler from "../../helpers/viewHandler.js"
 import User from '../models/users.js'
 import likeViewSchema from '../views/likes.js'
+import postViewSchema from '../views/posts.js'
 import userViewSchema from '../views/users.js'
 
 
 const debug_logger = debug('app:user:controller')
 const likeView = viewHandler(likeViewSchema)
+const postView = viewHandler(postViewSchema)
 const userView = viewHandler(userViewSchema)
 
 
@@ -62,12 +64,41 @@ export const getUserLikes = async (req, res) => {
     try {
         const page = req.query.page ? parseInt(req.query.page) : 1
         const result = await User
-            .getLikesByUserId(req.params.id, req.params.type)
+            .getLikesByUserId(req.params.id, req.query.type)
             .orderBy('created_at', 'desc')
             .paginate({perPage: 10, currentPage: page})
         likeView(req.user.role_name, result)
         let likes = result.data || []
-        if (likes) { return responseCodes.status200(res, {likes}) }
+        if (likes) {
+            return responseCodes.status200(res, {
+                type: req.query.type || 'like',
+                likes
+            })
+        }
+        return responseCodes.status404(res)
+    } catch(e) {
+        return responseCodes.status400(res, {errorDesc: e.toString()})
+    }
+}
+
+export const getUserPosts = async (req, res) => {
+    if (req.user.role !== 'admin' && req.params.id !== String(req.user.userId)){
+        return responseCodes.status401(res)
+    }
+    try {
+        const page = req.query.page ? parseInt(req.query.page) : 1
+        const result = await User
+            .getPostsByUserId(req.params.id, req.query.type)
+            .orderBy('created_at', 'desc')
+            .paginate({perPage: 10, currentPage: page})
+        postView(req.user.role_name, result)
+        let posts = result.data || []
+        if (posts) {
+            return responseCodes.status200(res, {
+                type: req.query.type || 'post',
+                posts
+            })
+        }
         return responseCodes.status404(res)
     } catch(e) {
         return responseCodes.status400(res, {errorDesc: e.toString()})

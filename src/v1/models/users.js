@@ -36,16 +36,13 @@ class UserModel extends Model {
         return Like.getByUserId(user_id)
     }
 
-    getPostsByUserId(user_id) {
+    getPostsByUserId(user_id, post_type) {
+        if (post_type === 'thread') {
+            return PostsThreads.getByUserId(user_id)
+        } else if (post_type === 'reply') {
+            return ThreadReplies.getByUserId(user_id)
+        }
         return Post.getByUserId(user_id)
-    }
-
-    getPostsThreadsByUserId(user_id) {
-        return PostsThreads.getByUserId(user_id)
-    }
-
-    getThreadRepliesByUserId(user_id) {
-        return ThreadReplies.getByUserId(user_id)
     }
 }
 
