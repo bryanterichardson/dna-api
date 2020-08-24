@@ -3,11 +3,13 @@ import debug from 'debug'
 import * as responseCodes from "../../helpers/responseCodes.js"
 import viewHandler from "../../helpers/viewHandler.js"
 import User from '../models/users.js'
-import userView from '../views/users.js'
+import likeViewSchema from '../views/likes.js'
+import userViewSchema from '../views/users.js'
 
 
 const debug_logger = debug('app:user:controller')
-const viewByRole = viewHandler(userView)
+const likeView = viewHandler(likeViewSchema)
+const userView = viewHandler(userViewSchema)
 
 
 export const createUser = async (req, res) => {
@@ -19,7 +21,7 @@ export const createUser = async (req, res) => {
     }
     try {
         const result = await User.create(req.body.email, req.body.password)
-        viewByRole(req.user.role_name, result)
+        userView(req.user.role_name, result)
         let user = result[0] || {}
         return responseCodes.status200(res, {user})
     } catch (e) {
@@ -33,7 +35,7 @@ export const deleteUserById = async (req, res) => {
     }
     try {
         const result = await User.deleteById(req.params.id)
-        viewByRole(req.user.role_name, result)
+        userView(req.user.role_name, result)
         let user = result[0] || {}
         return responseCodes.status200(res, {user})
     } catch (e) {
@@ -44,7 +46,7 @@ export const deleteUserById = async (req, res) => {
 export const getUserById = async (req, res) => {
     try {
         const result = await User.getById(req.params.id)
-        viewByRole(req.user.role_name, result)
+        userView(req.user.role_name, result)
         let user = result[0] || {}
         if (user) { return responseCodes.status200(res, {user}) }
         return responseCodes.status404(res)
@@ -63,7 +65,7 @@ export const getUserLikes = async (req, res) => {
             .getLikesByUserId(req.params.id, req.params.type)
             .orderBy('created_at', 'desc')
             .paginate({perPage: 10, currentPage: page})
-        viewByRole(req.user.role_name, result)
+        likeView(req.user.role_name, result)
         let likes = result.data || []
         if (likes) { return responseCodes.status200(res, {likes}) }
         return responseCodes.status404(res)
@@ -78,7 +80,7 @@ export const updateUserById = async (req, res) => {
     }
     try {
         const result = await User.updateById(req.params.id, req.body)
-        viewByRole(req.user.role_name, result)
+        userView(req.user.role_name, result)
         let user = result[0] || {}
         return responseCodes.status200(res, {user})
     } catch(e) {
