@@ -6,7 +6,7 @@ const viewHandler = (viewSchema={}) => {
         if(typeof role_name !== 'string'){
             throw new Error('enforceRoles error: role_name must be a string')
         }
-        array_of_items = array_of_items.data || array_of_items
+        array_of_items = array_of_items.data || array_of_items || []
         array_of_items.forEach((item) => {
             for(let columnName of Object.keys(item)){
                 let roleDefinition = viewSchema[columnName]
