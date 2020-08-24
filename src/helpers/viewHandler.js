@@ -1,4 +1,4 @@
-const roleMapper = (viewSchema={}) => {
+const viewHandler = (viewSchema={}) => {
     if(typeof viewSchema === 'object' && Array.isArray(viewSchema)){
         throw new Error('enforceRoles error: viewSchema must be an object')
     }
@@ -6,6 +6,7 @@ const roleMapper = (viewSchema={}) => {
         if(typeof role_name !== 'string'){
             throw new Error('enforceRoles error: role_name must be a string')
         }
+        array_of_items = array_of_items.data || array_of_items
         array_of_items.forEach((item) => {
             for(let columnName of Object.keys(item)){
                 let roleDefinition = viewSchema[columnName]
@@ -43,4 +44,4 @@ const roleMapper = (viewSchema={}) => {
     }
 }
 
-export default roleMapper
+export default viewHandler
