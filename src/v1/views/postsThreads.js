@@ -1,4 +1,6 @@
-const postThreadView = {
+import viewHandler from "../../helpers/viewHandler.js"
+
+const postThreadViewSchema = {
     id: '*',
     user_id: '*',
     post_id: '*',
@@ -8,5 +10,7 @@ const postThreadView = {
     created_at: '*',
     updated_at: '*'
 }
+
+const postThreadView = viewHandler(postThreadViewSchema)
 
 export default postThreadView

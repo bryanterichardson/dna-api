@@ -1,4 +1,6 @@
-const userView = {
+import viewHandler from "../../helpers/viewHandler.js"
+
+const userViewSchema = {
     id: '*',
     email: ['self', 'admin'],
     email_verified: ['self', 'admin'],
@@ -8,5 +10,7 @@ const userView = {
     created_at: '*',
     updated_at: '*'
 }
+
+const userView = viewHandler(userViewSchema)
 
 export default userView
