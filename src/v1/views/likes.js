@@ -1,7 +1,6 @@
 const likeView = {
     user_id: '*',
     post_thread_id: '*',
-    thread_reply_id: '*',
     created_at: '*',
     updated_at: '*'
 }

@@ -28,4 +28,7 @@ router.route('/:id/likes')
 router.route('/:id/posts')
     .get(userController.getUserPosts)
 
+router.route('/:id/threads')
+    .get(userController.getUserThreads)
+
 export default router
