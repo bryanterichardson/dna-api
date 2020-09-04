@@ -20,6 +20,17 @@ export const createPost = async (req, res) => {
     }
 }
 
+export const createPostThread = async (req, res) => {
+    try {
+        const result = await Post.createThread(req.user.userId, req.params.id, req.body)
+        postThreadView(req.user.role_name, result)
+        let thread = result[0] || {}
+        return responseCodes.status200(res, {thread})
+    } catch (e) {
+        return responseCodes.status400(res, {errorDesc: e.toString()})
+    }
+}
+
 export const deletePostById = async (req, res) => {
     try {
         const result = await Post.deleteById(req.user.userId, req.params.id)

@@ -17,5 +17,6 @@ router.route('/:id')
 
 router.route('/:id/threads')
     .get(postController.getPostThreads)
+    .post(postController.createPostThread)
 
 export default router

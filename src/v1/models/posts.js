@@ -11,6 +11,16 @@ class PostModel extends Model {
         return super.create(post)
     }
 
+    createThread (user_id, post_id, {content}) {
+        const thread = {}
+        thread.user_id = user_id
+        thread.post_id = post_id
+        thread.content = content
+        thread.is_visible = true
+        thread.is_visible_to_author = false
+        return PostsThreads.create(thread)
+    }
+
     deleteById(user_id, id){
         return super.deleteById(id)
             .where({user_id})
