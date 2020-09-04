@@ -4,8 +4,6 @@ import Like from './likes.js'
 import Post from './posts.js'
 import PostsThreads from './postsThreads.js'
 import PostsThreadsLikes from './postsThreadsLikes.js'
-import ThreadReplies from './threadReplies.js'
-import ThreadRepliesLikes from './threadRepliesLikes.js'
 
 
 class UserModel extends Model {
