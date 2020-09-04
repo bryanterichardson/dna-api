@@ -71,7 +71,7 @@ export const getPostThreads = async (req, res) => {
 
 export const updatePostById = async (req, res) => {
     try {
-        const result = await Post.updateById(req.user.user_id, req.params.id, req.body)
+        const result = await Post.updateById(req.user.userId, req.params.id, req.body)
         postView(req.user.role_name, result)
         let post = result[0] || {}
         return responseCodes.status200(res, {post})
