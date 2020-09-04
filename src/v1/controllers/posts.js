@@ -49,7 +49,7 @@ export const getPostById = async (req, res) => {
         if (post) { return responseCodes.status200(res, {post}) }
         return responseCodes.status404(res)
     } catch (e) {
-            return responseCodes.status400(res, {errorDesc: e.toString()})
+        return responseCodes.status400(res, {errorDesc: e.toString()})
     }
 }
 
