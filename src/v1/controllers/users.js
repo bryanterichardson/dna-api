@@ -1,20 +1,14 @@
 import debug from 'debug'
 
 import * as responseCodes from "../../helpers/responseCodes.js"
-import viewHandler from "../../helpers/viewHandler.js"
 import User from '../models/users.js'
-import likeViewSchema from '../views/likes.js'
-import postViewSchema from '../views/posts.js'
-import postThreadViewSchema from '../views/postsThreads.js'
-import userViewSchema from '../views/users.js'
+import likeView from '../views/likes.js'
+import postView from '../views/posts.js'
+import postThreadView from '../views/postsThreads.js'
+import userView from '../views/users.js'
 
 
 const debug_logger = debug('app:user:controller')
-const likeView = viewHandler(likeViewSchema)
-const postView = viewHandler(postViewSchema)
-const postThreadView = viewHandler(postThreadViewSchema)
-const userView = viewHandler(userViewSchema)
-
 
 export const createUser = async (req, res) => {
     if (req.user.role_name !== 'admin'){
