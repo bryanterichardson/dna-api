@@ -31,8 +31,8 @@ export class Model {
         this.queryBuilder = queryBuilder
     }
 
-    query(tableName) {
-        return this.queryBuilder(tableName)
+    query() {
+        return this.queryBuilder(this.tableName)
     }
 
     create(data) {
