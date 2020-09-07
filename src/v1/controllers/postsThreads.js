@@ -2,7 +2,7 @@ import debug from 'debug'
 
 import * as responseCodes from "../../helpers/responseCodes.js"
 import PostThread from '../models/postsThreads.js'
-import PostsThreadsLikes from "../models/postsThreadsLikes";
+import PostsThreadsLikes from "../models/postsThreadsLikes.js";
 import postThreadView from '../views/postsThreads.js'
 import likeView from '../views/likes.js'
 
