@@ -1,6 +1,3 @@
-# Ignore my secrets
-src/config.js
-
 # Ignore node modules folder.. reduce repo size
 node_modules/
 **/node_modules/
